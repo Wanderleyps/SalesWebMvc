@@ -6,11 +6,24 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using SalesWebMvc.Models.ViewModels;
+using Microsoft.Extensions.Logging;
+using SalesWebMvc.Data;
 
 namespace SalesWebMvc.Controllers
 {
     public class HomeController : Controller
     {
+        /*private ILogger<HomeController> _logger;
+        
+        public HomeController(ILogger<HomeController> logger, SeedingService seedingService)
+        {
+
+            _logger = logger;
+
+            seedingService.Seed();
+
+        }
+        */
         public IActionResult Index()
         {
             return View();
