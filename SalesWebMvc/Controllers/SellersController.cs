@@ -41,6 +41,10 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken]//previne que a aplicação sofra ataques CSRF(quando alguem aproveita a sessão de atenticação para enviar dados maliciosos
         public IActionResult Create(Seller seller)//recebe o obj da view
         {
+            if(!ModelState.IsValid)
+            {
+                return View(seller);
+            }
             _sellerService.Insert(seller);
             return RedirectToAction(nameof(Index));
         }
@@ -104,10 +108,16 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, Seller seller)
         {
-            if(id != seller.Id)
+            if (!ModelState.IsValid)
+            {
+                var departments = _departmentService.FindAll();
+                var viewModel = new SellerFormViewModel { Seller = seller, Departments = departments };
+                return View(seller);
+            }
+            if (id != seller.Id)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id mismatch" }); ;//o id do vendedor que está atualizando não pode ser diferente do id da url da requisição
-            }
+            }   
             try
             {
                 _sellerService.Update(seller);
