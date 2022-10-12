@@ -31,7 +31,7 @@ namespace SalesWebMvc.Services
 
         public Seller FindById(int id)
         {
-            //utilizando o Include para fazer um join entre Seller e Department para exibir na tela Details (eager loading)
+            //utilizando o Include para fazer um join entre Seller e Department para exibir na tela Details (eager loading), carrega os obj associados ao obj principal
             return _context.Seller.Include(obj => obj.Department).FirstOrDefault(obj => obj.Id == id);
         }
 
@@ -53,9 +53,9 @@ namespace SalesWebMvc.Services
                 _context.Update(obj);
                 _context.SaveChanges();
             }
-            catch(DbUpdateConcurrencyException e)
+            catch(DbUpdateConcurrencyException e)//capturando excecao do entity
             {
-                throw new DbConcurrencyException(e.Message);
+                throw new DbConcurrencyException(e.Message);//lançando exceção criada com o objetivo de não propagar exceções de acesso a dados
             }
         }
     }
