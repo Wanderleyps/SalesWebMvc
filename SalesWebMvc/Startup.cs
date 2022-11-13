@@ -39,9 +39,14 @@ namespace SalesWebMvc
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddDbContext<SalesWebMvcContext>(options =>
+            /*services.AddDbContext<SalesWebMvcContext>(options =>
                 options.UseMySql(Configuration.GetConnectionString("SalesWebMvcContext"), builder =>
-                builder.MigrationsAssembly("SalesWebMvc")));
+                builder.MigrationsAssembly("SalesWebMvc")));*/
+
+            services.AddEntityFrameworkSqlServer()
+                .AddDbContext<SalesWebMvcContext>(
+                opt => opt.UseSqlServer(
+                    Configuration.GetConnectionString("SalesWebMvc")));
 
             //register class service for dependency injection system
             services.AddScoped<SeedingService>();
